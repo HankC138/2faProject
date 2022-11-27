@@ -1,28 +1,15 @@
-<!DOCTYPE html>
+const html = require('html-template-tag')
+const signup = html`<!DOCTYPE html>
 <html lang="en">
 	<head>
 		<meta charset="UTF-8" />
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>2fa Test</title>
-		<script src="index.js" defer></script>
 	</head>
 	<body>
 		<div>
-			<div>
-				<button id="2faSend">Send My Code</button>
-				<div>
-					<input
-						type="text"
-						id="2faCode"
-						placeholder="your 2FA code please"
-						required
-                        pattern="[0-9]{4}"
-					/>
-					<label for="2faCode">2FA Code</label>
-				</div>
-			</div>
-			<form action="PUT">
+			<form action="POST">
 				<div>
 					<input
 						type="text"
@@ -57,4 +44,7 @@
 			</form>
 		</div>
 	</body>
-</html>
+</html>`
+
+
+module.exports = signup;
