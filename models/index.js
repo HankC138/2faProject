@@ -18,6 +18,11 @@ const User = db.define('user',{
         type:Sequelize.STRING,
         allowNull:false,
         unique:true
+    },
+    authenticated:{
+        type:Sequelize.BOOLEAN,
+        allowNull:false,
+        defaultValue:false
     }
 
 })
