@@ -2,7 +2,7 @@ require("dotenv").config();
 const express = require("express");
 const twilio = require("twilio")(process.env.ACCOUNTSID, process.env.AUTHTOKEN);
 const router = express.Router();
-const { signup, factorview,success } = require("../views/");
+const { signup, factorview, success } = require("../views/");
 const { User, Code } = require("../models");
 
 router.get("/", (_req, res, next) => {
@@ -61,28 +61,31 @@ router.get("/auth/:id", async (req, res, next) => {
 		next(error);
 	}
 });
-router.post('/authorized', async (req,res,next) => {
-    try{
-    const authCode = await Code.findOne({
-    where:{
-        authCode:req.body.code
-    },
-    include:{
-        model: User
-    }
-})
-const user = await User.findOne({
-    where:{
-        id:authCode.userId
-    }
-})
-    if(req.body.code === authCode.authCode.toString() && authCode.valid_until > new Date()){await user.update({authenticated:true}),res.send(success)}
-    res.redirect('/signup')}
-    catch(error){
-        next(error)
-    }
-})
-
-
+router.post("/authorized", async (req, res, next) => {
+	try {
+		const authCode = await Code.findOne({
+			where: {
+				authCode: req.body.code,
+			},
+			include: {
+				model: User,
+			},
+		});
+		const user = await User.findOne({
+			where: {
+				id: authCode.userId,
+			},
+		});
+		if (
+			req.body.code === authCode.authCode.toString() &&
+			authCode.valid_until > new Date()
+		) {
+			await user.update({ authenticated: true }), res.send(success);
+		}
+		res.redirect("/signup");
+	} catch (error) {
+		next(error);
+	}
+});
 
 module.exports = router;

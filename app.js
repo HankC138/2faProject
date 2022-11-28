@@ -13,7 +13,6 @@ app.use(express.static("./public"));
 	app.get("/auth/:id", routes);
 	app.use("/signup", routes);
 	app.use("/auth", routes);
-	// app.use("/auth/:id", routes);
 	await db.sync();
 	const PORT = 666;
 	app.listen(PORT, () =>
